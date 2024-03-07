@@ -17,6 +17,7 @@ struct Task // 任务的结构体   一个线程函数 和线程函数的参数
     void *arg;
 };
 
+
 typedef struct Task task;
 
 task *CreateTask(void *(*func)(void *), void *arg) // 创任务 把任务的参数给他

@@ -45,5 +45,4 @@ void InitMonster(struct DynamicArray *array);
 void InitTreasuers(struct DynamicArray *array);
 int GetRandNumber(int max);
 
-
 #endif

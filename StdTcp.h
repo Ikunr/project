@@ -14,4 +14,5 @@ void TcpClientSend(TcpC *c, void *ptr, size_t size);
 void TcpClientRecv(TcpC *c, void *ptr, size_t size);
 void ClearTcpClient(TcpC *c);
 int getTcpSock(TcpS *c);
+
 #endif

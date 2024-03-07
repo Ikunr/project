@@ -3,7 +3,6 @@
 
 
 
-
 void MakeMove(struct Player *player,char symbol)
 {
     switch (symbol)

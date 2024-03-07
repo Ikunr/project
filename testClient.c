@@ -257,6 +257,7 @@ void *thread_handler(void *arg)
     }
 }
 
+
 int main(int argc, char const *argv[])
 {
     Msg msg;

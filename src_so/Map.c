@@ -3,7 +3,6 @@
 
 
 
-
 void InitBoard(char (*p)[Map_Size])//用数组指针指向二维数组
 {
     for(int i = 0; i < Map_Size;i++)

@@ -54,3 +54,4 @@ int GetQueueLen(LQueue *q) // 获取队列长度
 {
     return q->queue.len;
 }
+

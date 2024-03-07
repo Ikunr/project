@@ -17,5 +17,4 @@ void FreeArray(DMArray *array);
 int ReallocArray(DMArray *array);
 int InsertArray(DMArray *array,ElementType element);//ElementType element是要插入的数据
 
-
 #endif

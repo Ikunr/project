@@ -164,6 +164,7 @@ void RemoveByElement(DLlist *list, ElementType element)
 //     printf("\n");
 // }
 
+
 void FreeDLlist(DLlist *list)
 {
     while (list->head != NULL)

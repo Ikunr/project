@@ -16,4 +16,5 @@ void CopyFile(const char *SourcePath, const char *TargetPath);   // 原路径 �
 
 int IsFileExist1(char *file, char *childfile);
 
+
 #endif

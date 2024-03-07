@@ -17,4 +17,5 @@ struct Node *GerFront(LQueue *lq);
 void FreeQueue(LQueue *lq);
 int GetQueueLen(LQueue *q); // 获取队列长度
 
+
 #endif

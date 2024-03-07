@@ -10,7 +10,6 @@ int Size(MyString *obj);
 void RemoveString(MyString*dest,const char *str);  //前置声明，编译器从上往下翻译，防止编译器找不到报错
 void InsertString(MyString *dest,const char*str,int index);
 
-
 void Initialize(MyString *obj, const char *str)  //初始化结构体
 {
        //将不可修改值的常量指针里面的参数str拷贝参数到结构体的string里面去

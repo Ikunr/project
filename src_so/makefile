@@ -11,3 +11,4 @@ $(TARGET): $(OBJ)
 clean:
 	@rm -rf *.o $(TARGET)
 	sudo rm -rf /usr/lib/$(TARGET)
+	

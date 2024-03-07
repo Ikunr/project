@@ -17,7 +17,6 @@ struct String
         void (*insertString)(MyString *dest,const char *str,int index);
 };
 
-
 void Initialize(MyString *obj,const char *str);
 void FreeMyString(MyString *dest);
 

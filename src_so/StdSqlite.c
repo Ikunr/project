@@ -112,6 +112,7 @@ void freeInfoResult(char **result)
 {
     sqlite3_free_table(result);
 }
+
 /* 判断数据库中是否有数据 元组 */
 int GetTableLen(SQL *s, const char *tableName)
 {

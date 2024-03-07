@@ -16,6 +16,7 @@ typedef struct DoubleLinkList
     int len;
 } DLlist;
 
+
 int InitDLlist(DLlist *list);
 void InsertTail(DLlist *list, ElementType element); // 对链表进行操作  在链表后面加节点
 void InsertHead(DLlist *list, ElementType element);

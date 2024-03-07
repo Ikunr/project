@@ -97,5 +97,6 @@ void InitTreasuers(struct DynamicArray *array)
     InsertArray(array,CreateTreasure("不真不假香槟",20));
     InsertArray(array,CreateTreasure("半真半假香槟",20));
     InsertArray(array,CreateTreasure("小香槟",20));
+    
 }
 

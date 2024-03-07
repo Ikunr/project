@@ -7,7 +7,6 @@ struct StdSqlite;
 
 typedef struct StdSqlite SQL;
 
-
 /* 打开数据库 */
 SQL *initSqlite(const char *filename);
 /* 创表 */

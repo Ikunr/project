@@ -80,3 +80,4 @@ int InsertArray(DMArray *array, ElementType element)//插入数组元素
 }
 
 
+

@@ -10,8 +10,6 @@
 #include"MyString.h"
 #include"DynamicArray.h"
 
-
-
 struct Player
 {
     int HP;

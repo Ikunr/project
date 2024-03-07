@@ -9,5 +9,4 @@ void MakeMove(struct Player *player,char symbol);
 int Battle(struct Player *player,struct Monster* monster);
 
 
-
 #endif

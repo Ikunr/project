@@ -7,13 +7,8 @@
 #define false 0
 
 
-
 void InitBoard(char (*p)[Map_Size]);
 void PrintMap(char (*p)[Map_Size],struct Player *player,struct DynamicArray *monsent );
-
-
-
-
 
 
 

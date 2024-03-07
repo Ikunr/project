@@ -13,8 +13,4 @@ void PrintMap(char (*p)[Map_Size],struct Player *player,struct DynamicArray *mon
 
 
 
-
-
-
-
 #endif

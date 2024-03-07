@@ -13,6 +13,11 @@
 #include <linux/time_types.h>
 #include <linux/types.h>
 #include <stddef.h>
+#include "Map.h"
+#include "batter.h"
+#include "super.h"
+#include "DynamicArray.h"
+#include "MyString.h"
 
 #define true 1
 #define false 0
@@ -20,6 +25,10 @@
 #define NAME_BUFFER_SIZE 20
 #define CONTENT_BUFFER_SIZE 1024
 #define BUFFER_SIZE 128
+#define LOCAL_IPADDRESS "127.0.0.1"
+#define SERVER_PORT 9090
+char * SERVER_IP = "172.25.216.59";
+
 
 enum OPERATION
 {
@@ -35,11 +44,12 @@ enum OPERATION
     DEL_FRIENDS,
     FILE_TRANSFER,
     VIEWONLINE_INFOMATION,
+    START_PLAY_GAME,
     USER_OFFLINE, 
     INSERT_FRIEND,
     FIND_ONLINE_NUM = 1,
     FIND_ONLINE_FRIEND,
-    AGREE_OR_REJEST_FILE_TRANSFER = 11,
+    AGREE_OR_REJEST_FILE_TRANSFER = 12,
     INSERT_GROUP,
     
 };
@@ -91,7 +101,7 @@ pthread_mutex_t choice_mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t scanf_mainCond = PTHREAD_COND_INITIALIZER;
 pthread_cond_t scanf_cond = PTHREAD_COND_INITIALIZER;
 
-
+extern int startPlayGame();
 
 void start()
 {
@@ -102,8 +112,9 @@ void start()
     printf("=          4、添加好友            =\n");
     printf("=          5、删除好友            =\n");
     printf("=          6、传送文件            =\n");
-    printf("=          7、查看好友信息         =\n");
-    printf("=          8、退出账号            =\n");
+    printf("=          7、查看好友信息        =\n");
+    printf("=          8、进入魔塔小游戏~     =\n");
+    printf("=          \033[31m9、退出账号\033[0m            =\n");
     printf("==================================\n");
 }
 
@@ -252,13 +263,15 @@ int main(int argc, char const *argv[])
 
     SQL *s;
 
-    if (argc != 3)
-    {
-        printf("invalid nums!\n");
-        return -1;
-    }
-    
-    TcpC *client = InitTcpClient(argv[1], atoi(argv[2]));
+#if 0
+    // if (argc != 3)
+    // {
+    //     printf("invalid nums!\n");
+    //     return -1;
+    // }
+#endif
+
+    TcpC *client = InitTcpClient(SERVER_IP, SERVER_PORT);
 
     if (client == NULL)
     {
@@ -466,16 +479,19 @@ int main(int argc, char const *argv[])
                 TcpClientSend(client, &msg, sizeof(msg));
             }
         }
+        else if (msg.flag == START_PLAY_GAME)
+        {
+            startPlayGame();
+            continue;;
+        }
         else if (msg.flag == USER_OFFLINE)              /* 退出 */
         {
             int choise;
             printf("确认是否退出\n");
-            printf("1、确定退出\n");
-
+            printf("\033[31m1、确定退出\033[0m\n");
             printf("2、取消\n");
             scanf("%d", &choise);
 
-            // while (getchar() != '\n');
             if (choise == 2)
             {
                 continue;
@@ -560,5 +576,87 @@ int main(int argc, char const *argv[])
         }
     }
     ClearThread(t);
+    return 0;
+}
+
+int startPlayGame()
+{
+    srand(time(NULL));//使每时每刻的随机值都不一样
+    system("clear");
+    printf("***********************************************************\n");
+    printf("****************欢迎来到魔塔时间！ 我的小baby*******************\n");
+    printf("***********************************************************\n");
+
+
+    char board[Map_Size][Map_Size];//用二维数组定义地图的大小
+    InitBoard(board);
+
+    struct Player player;//创建一个名为player、struct Player类型的变量
+    InitPlayer(&player);//取这个名为player的地址在InitPlayer函数中给他赋值
+    
+    struct DynamicArray monsters = {NULL,10,0};//创建一个名为monsters的动态数组结构体，并将他动态数组指针置空、在堆上申请10个单位空间、0个元素
+    InitMonster(&monsters);
+
+    struct DynamicArray treasures = {NULL,10,0};
+    InitMonster(&treasures);
+
+
+    while (1)
+    {
+        system("clear");
+        PrintMap(board,&player,&monsters);
+        printf("你当前所在的位置是<%d,%d>\n",player.x+1,player.y+1);
+
+        for(int i = 0; i < monsters.len;i++)
+        {
+            struct Monster *monster = (struct Monster *)monsters.dp[i];
+            if(monster->HP > 0 && monster->x == player.x && monster->y == player.y)
+            {
+                if(Battle(&player,monster) == false)
+                {
+                    printf("Game over!\n");
+                    break;
+                }
+            }
+        }
+
+        if(player.HP == 0)
+        break;
+
+        printf("请选择你要进行的移动(输入'w','s','a','d'): ");
+        printf("\033[31m按q退出游戏哦~\033[0m\n");
+        char choice;
+        scanf("%c", &choice);
+        MakeMove(&player,choice);
+
+        int flage = 0;
+        for(int i = 0; i < monsters.len;i++)
+        {
+            
+            struct Monster *monster = (struct Monster *)monsters.dp[i];
+            if(monster->HP > 0)
+            {
+                flage =1;
+            }
+        }
+        if(flage == 0)
+        {
+            printf("你胜利了！\n");
+            break;
+        }
+        if (choice == 'q')
+        {
+            break;
+        }
+    }
+
+
+        for(int i = 0; i < monsters.len;i++)
+        {
+            struct Monster *monster = (struct Monster *)monsters.dp[i];
+            free(monster->name.string);
+            free(monster);
+        }
+        free(monsters.dp);
     return 0;
 }

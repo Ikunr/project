@@ -117,7 +117,7 @@ int GetTableLen(SQL *s, const char *tableName)
 {
     char sql[4096] = {0};
     sprintf(sql, "select count(*) from %s;", tableName);
-
+  
     char **result;
     int row, column;
 

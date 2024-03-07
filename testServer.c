@@ -21,6 +21,8 @@
 #define NAME_BUFFER_SIZE 20
 #define CONTENT_BUFFER_SIZE 1024
 #define BUFFER_SIZE 128
+#define LOCAL_IPADDRESS "127.0.0.1"
+#define SERVER_PORT 9090
 
 
 enum OPERATION
@@ -37,14 +39,15 @@ enum OPERATION
     DEL_FRIENDS,
     FILE_TRANSFER,
     VIEWONLINE_INFOMATION,
-    USER_OFFLINE = 9, 
+    USER_OFFLINE = 10, 
     INSERT_FRIEND,
     FIND_ONLINE_NUM = 1,
     FIND_ONLINE_FRIEND,
-    AGREE_OR_REJEST_FILE_TRANSFER = 11,
+    AGREE_OR_REJEST_FILE_TRANSFER = 12,
     INSERT_GROUP,
     
 };
+
 
 enum SATATUSCODE 
 {
@@ -158,7 +161,7 @@ void *thread_handler(void *arg)
         if (readBytes < 0)
         {
             if (errno == EAGAIN)
-            {
+            {                                                                                                                               
                 printf("read end ...\n");
                 break;
             }
@@ -749,11 +752,14 @@ int main(int argc, char const *argv[])
     /* 清除脏数据 */
     memset(&arg, 0, sizeof(arg));
 
-    if (argc != 3)
-    {
-        printf("invalid nums!\n");
-        return -1;
-    }
+#if 0
+    // if (argc != 3)
+    // {
+    //     printf("invalid nums!\n");
+    //     return -1;
+    // }
+#endif
+
     InitDLlist(&list);
 
     /* 打开数据库 */
@@ -776,7 +782,9 @@ int main(int argc, char const *argv[])
     }
 
     /* 初始化服务器 */
-    TcpS *tcpServer = InitTcpServer(argv[1], atoi(argv[2]));
+    // TcpS *tcpServer = InitTcpServer(argv[1], atoi(argv[2]));
+    TcpS *tcpServer = InitTcpServer(" ", SERVER_PORT);
+
     if (tcpServer == NULL)
     {
         printf("InitTcpServer error!\n");

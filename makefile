@@ -189,8 +189,8 @@
 #版本6
 TARFET=server
 TARGET=client
-OBJ=testClient.o
-OBJECT=testServer.o
+OBJ=testServer.o
+OBJECT=testClient.o
 
 LDFALGS=-L./src_so -L./src_so2
 LIBS=-lAVLTree

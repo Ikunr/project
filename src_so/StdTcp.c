@@ -39,7 +39,9 @@ TcpS *InitTcpServer(const char *IP, short int port)
     struct sockaddr_in addr;
     addr.sin_family = AF_INET;
     addr.sin_port = htons(port);
-    addr.sin_addr.s_addr = inet_addr(IP);
+    // addr.sin_addr.s_addr = inet_addr(IP);
+    addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    
 
     if (bind(s->sock, (struct sockaddr *)&addr, sizeof(addr)) < 0)
     {
@@ -69,6 +71,7 @@ int TcpServerAccept(TcpS *s)
         perror("accept:");
         return -1;
     }
+    
     return acceptSock;
 }
 
@@ -78,6 +81,9 @@ void TcpServerSend(int ClientSock, void *ptr, size_t size)
     {
         perror("send");
     }
+
+    
+
 }
 
 int TcpServerRecv(int ClientSock, void *ptr, size_t size)

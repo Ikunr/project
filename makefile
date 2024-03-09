@@ -192,13 +192,13 @@ OBJ=testServer.o
 OBJECT=testClient.o
 
 LDFALGS=-L./src_so -L./src_so2
-LIBS=-lAVLTree
+LIBS=-lAVLTree -lsqlite3 
 
 $(TARFET):$(OBJ)
-	$(CC) -g $^ $(LIBS) $(LDFALGS) -o $@ -lsqlite3 
+	$(CC) -g $^ $(LIBS) $(LDFALGS) -o $@ 
 
 $(TARGET):$(OBJECT)
-	$(CC) -g $^ $(LIBS) $(LDFALGS) -o $@ -lsqlite3 
+	$(CC) -g $^ $(LIBS) $(LDFALGS) -o $@  
 
 %.o:%.c
 	gcc -g -c $^ -o $@
@@ -207,7 +207,7 @@ $(TARGET):$(OBJECT)
 .PHONY:clean
 
 clean:
-	@rm -rf *.o $(TARFET) $(TARGET)
+	$(RM) *.o $(TARFET) $(TARGET)
 
 all:server client
 
